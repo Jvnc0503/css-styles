@@ -6,7 +6,7 @@
 @author         Gemini
 ==/UserStyle== */
 
-@-moz-document domain("youtube.com") {
+@-moz-document domain("www.youtube.com") {
     /* 1. Global OLED Color Variables */
     :root,
     [dark],
