@@ -1,13 +1,13 @@
 /* ==UserStyle==
-@name           YouTube OLED Black (No Gradients/Transparency)
+@name           YouTube OLED Black - No Transparency Revision
 @namespace      github.com/openstyles/stylus
-@version        1.0.0
-@description    True OLED black theme for YouTube with no gradients or transparencies.
+@version        1.1.0
+@description    Forces pitch black OLED theme. Fixes categories bar transparency and gradients.
 @author         Gemini
 ==/UserStyle== */
 
 @-moz-document domain("www.youtube.com") {
-    /* 1. Global OLED Color Variables */
+    /* 1. Global OLED Variable Overrides */
     :root,
     [dark],
     [darker-dark-theme] {
@@ -18,84 +18,75 @@
         --yt-spec-brand-background-solid: #000000 !important;
         --yt-spec-general-background-a: #000000 !important;
         --yt-spec-general-background-b: #000000 !important;
-        --yt-spec-error-background: #000000 !important;
         --yt-spec-10-percent-layer: #111111 !important;
-        --yt-spec-badge-chip-background: #0f0f0f !important;
-        --ytd-searchbox-background: #000000 !important;
-        --ytd-searchbox-legacy-border-color: #222222 !important;
-        --yt-spec-brand-background-primary: #000000 !important;
-        --yt-spec-brand-background-secondary: #000000 !important;
+        
+        /* Chip/Category specific variables */
+        --yt-spec-badge-chip-background: #000000 !important;
+        --yt-spec-button-chip-background-hover: #1a1a1a !important;
     }
 
-    /* 2. Force Backgrounds to Solid Black */
-    html, body, ytd-app, 
-    #content, #page-manager,
-    ytd-masthead, #masthead-container, 
-    #background, ytd-browse, 
-    ytd-watch-flexy, #guide-content,
-    ytd-mini-guide-renderer, 
-    ytd-playlist-panel-renderer,
-    ytd-engagement-panel-section-list-renderer,
-    #chat-container, ytd-live-chat-frame,
-    #columns, #primary, #secondary,
-    ytd-rich-grid-renderer, 
-    ytd-item-section-renderer {
+    /* 2. Fix Video Categories Bar (Chips) */
+    /* Remove background transparency from the bar container */
+    ytd-feed-filter-chip-bar-renderer,
+    #chips-wrapper.ytd-feed-filter-chip-bar-renderer,
+    #container.ytd-feed-filter-chip-bar-renderer {
         background-color: #000000 !important;
         background: #000000 !important;
     }
 
-    /* 3. Disable All Gradients and Reflections */
+    /* Remove the "Fader" gradients at the ends of the category bar */
+    #left-arrow.ytd-feed-filter-chip-bar-renderer::after,
+    #right-arrow.ytd-feed-filter-chip-bar-renderer::before {
+        display: none !important;
+    }
+
+    /* Force chips to be pitch black with a thin border */
+    yt-chip-cloud-chip-renderer {
+        background-color: #000000 !important;
+        border: 1px solid #333333 !important;
+        border-radius: 8px !important;
+    }
+
+    /* Active/Selected chip state */
+    yt-chip-cloud-chip-renderer[chip-style="CHIP_CLOUD_CHIP_STYLE_DEFAULT"][selected],
+    yt-chip-cloud-chip-renderer[selected] {
+        background-color: #ffffff !important; /* White background for selected to maintain contrast */
+        color: #000000 !important;
+    }
+
+    /* 3. Global Gradient & Transparency Removal */
     * {
         background-image: none !important;
         box-shadow: none !important;
         text-shadow: none !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
     }
 
-    /* 4. Disable Transparencies and Opacity Effects */
+    /* 4. Ensure Header & Player are Solid */
     ytd-masthead, 
     #masthead-container,
-    #guide-content, 
-    ytd-mini-guide-entry-renderer,
-    ytd-searchbox, 
-    #container.ytd-searchbox,
-    .ytp-chrome-bottom, 
+    .ytp-chrome-bottom,
     .ytp-gradient-bottom, 
     .ytp-gradient-top {
+        background-color: #000000 !important;
         opacity: 1 !important;
-        background-color: #000000 !important;
     }
 
-    /* 5. Disable Ambient Mode (Cinematic Lighting) */
+    /* 5. Ambient Mode Cleanup */
     #cinematics, 
-    .ytp-inline-settings-menu,
-    #cinematic-container {
+    #cinematic-container,
+    #background.ytd-masthead {
         display: none !important;
-        visibility: hidden !important;
+        background: transparent !important;
     }
 
-    /* 6. Fix for Search Bar and Header */
-    ytd-searchbox#container,
-    ytd-searchbox#search-form,
-    #container.ytd-searchbox input {
-        background-color: #000000 !important;
-        color: white !important;
-        border: 1px solid #333 !important;
-    }
-
-    /* 7. Video Player Adjustments */
-    .html5-video-player {
-        background: #000000 !important;
-    }
-    
-    .ytp-chrome-bottom {
-        background: rgba(0, 0, 0, 1) !important; /* Force solid controls */
-    }
-
-    /* 8. Sidebar and Dialogs */
-    ytd-guide-renderer,
-    ytd-simple-menu-header-renderer,
-    ytd-active-account-header-renderer,
-    #contentWrapper ytd-multi-page-menu-renderer {
+    /* 6. General Layout Force Black */
+    html, body, ytd-app, 
+    #content, #page-manager,
+    ytd-browse, ytd-watch-flexy,
+    #guide-content, ytd-mini-guide-renderer,
+    #columns, #primary, #secondary {
         background-color: #000000 !important;
     }
 }
