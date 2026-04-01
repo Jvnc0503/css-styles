@@ -1,13 +1,13 @@
 /* ==UserStyle==
-@name           YouTube OLED Black - No Transparency Revision
+@name           YouTube OLED Black - Fix Auto-hide
 @namespace      github.com/openstyles/stylus
-@version        1.1.0
-@description    Forces pitch black OLED theme. Fixes categories bar transparency and gradients.
+@version        1.3.0
+@description    Pitch black OLED, sin transparencias, con barra de progreso funcional (auto-hide).
 @author         Gemini
 ==/UserStyle== */
 
 @-moz-document domain("www.youtube.com") {
-    /* 1. Global OLED Variable Overrides */
+    /* 1. Colores Base OLED */
     :root,
     [dark],
     [darker-dark-theme] {
@@ -19,42 +19,23 @@
         --yt-spec-general-background-a: #000000 !important;
         --yt-spec-general-background-b: #000000 !important;
         --yt-spec-10-percent-layer: #111111 !important;
-        
-        /* Chip/Category specific variables */
         --yt-spec-badge-chip-background: #000000 !important;
         --yt-spec-button-chip-background-hover: #1a1a1a !important;
     }
 
-    /* 2. Fix Video Categories Bar (Chips) */
-    /* Remove background transparency from the bar container */
+    /* 2. Forzar fondos negros sólidos (Sin afectar opacidad de elementos) */
+    html, body, ytd-app, 
+    #content, #page-manager,
+    ytd-masthead, #masthead-container,
+    ytd-browse, ytd-watch-flexy,
+    #guide-content, ytd-mini-guide-renderer,
+    #columns, #primary, #secondary,
     ytd-feed-filter-chip-bar-renderer,
-    #chips-wrapper.ytd-feed-filter-chip-bar-renderer,
-    #container.ytd-feed-filter-chip-bar-renderer {
+    #chips-wrapper.ytd-feed-filter-chip-bar-renderer {
         background-color: #000000 !important;
-        background: #000000 !important;
     }
 
-    /* Remove the "Fader" gradients at the ends of the category bar */
-    #left-arrow.ytd-feed-filter-chip-bar-renderer::after,
-    #right-arrow.ytd-feed-filter-chip-bar-renderer::before {
-        display: none !important;
-    }
-
-    /* Force chips to be pitch black with a thin border */
-    yt-chip-cloud-chip-renderer {
-        background-color: #000000 !important;
-        border: 1px solid #333333 !important;
-        border-radius: 8px !important;
-    }
-
-    /* Active/Selected chip state */
-    yt-chip-cloud-chip-renderer[chip-style="CHIP_CLOUD_CHIP_STYLE_DEFAULT"][selected],
-    yt-chip-cloud-chip-renderer[selected] {
-        background-color: #ffffff !important; /* White background for selected to maintain contrast */
-        color: #000000 !important;
-    }
-
-    /* 3. Global Gradient & Transparency Removal */
+    /* 3. Eliminar Degradados y Transparencias de Textura */
     * {
         background-image: none !important;
         box-shadow: none !important;
@@ -63,30 +44,41 @@
         backdrop-filter: none !important;
     }
 
-    /* 4. Ensure Header & Player are Solid */
-    ytd-masthead, 
-    #masthead-container,
-    .ytp-chrome-bottom,
+    /* 4. Barra de Categorías (Chips) - Sin faders */
+    #left-arrow.ytd-feed-filter-chip-bar-renderer::after,
+    #right-arrow.ytd-feed-filter-chip-bar-renderer::before {
+        display: none !important;
+    }
+
+    yt-chip-cloud-chip-renderer {
+        background-color: #000000 !important;
+        border: 1px solid #333333 !important;
+    }
+
+    /* 5. FIX: Reproductor y Barra de Progreso */
+    /* Eliminamos los degradados del reproductor pero dejamos que el sistema controle la opacidad */
     .ytp-gradient-bottom, 
     .ytp-gradient-top {
         background-color: #000000 !important;
-        opacity: 1 !important;
+        background-image: none !important;
     }
 
-    /* 5. Ambient Mode Cleanup */
-    #cinematics, 
-    #cinematic-container,
-    #background.ytd-masthead {
-        display: none !important;
-        background: transparent !important;
-    }
-
-    /* 6. General Layout Force Black */
-    html, body, ytd-app, 
-    #content, #page-manager,
-    ytd-browse, ytd-watch-flexy,
-    #guide-content, ytd-mini-guide-renderer,
-    #columns, #primary, #secondary {
+    /* Aseguramos que el fondo sea negro pero NO forzamos opacity: 1 */
+    .ytp-chrome-bottom {
         background-color: #000000 !important;
+    }
+
+    /* 6. Desactivar Modo Ambiental (Cinematics) */
+    #cinematics, 
+    #cinematic-container {
+        display: none !important;
+    }
+
+    /* 7. Cuadro de búsqueda */
+    ytd-searchbox#container,
+    ytd-searchbox#search-form,
+    #container.ytd-searchbox input {
+        background-color: #000000 !important;
+        border: 1px solid #333 !important;
     }
 }
