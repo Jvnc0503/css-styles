@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           YouTube OLED Black
 @namespace      github.com/openstyles/stylus
-@version        1.6.3
+@version        1.6.4
 @description    Pitch Black OLED
 @author         Gemini
 ==/UserStyle== */
@@ -44,7 +44,7 @@
         backdrop-filter: none !important;
     }
 
-    /* 4. Barra de Categorías (Chips) - FIX BLOQUES CUADRADOS */
+    /* 4. Barra de Categorías (Chips) - FIX ESTADO ACTIVO */
     #left-arrow.ytd-feed-filter-chip-bar-renderer::after,
     #right-arrow.ytd-feed-filter-chip-bar-renderer::before {
         display: none !important;
@@ -56,9 +56,16 @@
         border: none !important;
     }
 
-    /* Aplicamos el fondo OLED solo a la píldora redondeada */
-    .ytChipShapeChip {
+    /* CHIP INACTIVO: Fondo negro puro OLED y texto claro */
+    .ytChipShapeChip.ytChipShapeInactive {
         background-color: #000000 !important;
+        color: #f1f1f1 !important;
+    }
+
+    /* CHIP ACTIVO (Seleccionado): Fondo blanco y texto oscuro para resaltarlo */
+    .ytChipShapeChip.ytChipShapeActive {
+        background-color: #ffffff !important;
+        color: #000000 !important;
     }
 
     /* Modificamos el contorno (stroke) nativo de YouTube para que sea un gris oscuro sutil */
@@ -95,6 +102,12 @@
     .ytp-chrome-bottom *, 
     .ytp-chrome-top * {
         text-shadow: 0 0 3px rgba(0,0,0,0.8) !important;
+    }
+
+    /* ELIMINAR EL BORDE GRIS DE LOS BOTONES DEL REPRODUCTOR */
+    .ytp-button {
+        border: none !important;
+        outline: none !important;
     }
 
     /* 6. Desactivar Modo Ambiental (Cinematics) */
