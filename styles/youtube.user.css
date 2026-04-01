@@ -1,8 +1,8 @@
 /* ==UserStyle==
 @name           YouTube OLED Black - Fix Auto-hide
 @namespace      github.com/openstyles/stylus
-@version        1.3.0
-@description    Pitch Black OLED
+@version        1.4.0
+@description    Pitch Black OLED con reproductor segmentado
 @author         Gemini
 ==/UserStyle== */
 
@@ -56,16 +56,28 @@
     }
 
     /* 5. FIX: Reproductor y Barra de Progreso */
-    /* Eliminamos los degradados del reproductor pero dejamos que el sistema controle la opacidad */
-    .ytp-gradient-bottom, 
+    /* Restauramos los degradados transparentes para evitar el bloque negro sólido sobre el video */
+    .ytp-gradient-bottom {
+        background-color: transparent !important;
+        background-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%) !important;
+    }
+    
     .ytp-gradient-top {
-        background-color: #000000 !important;
-        background-image: none !important;
+        background-color: transparent !important;
+        background-image: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%) !important;
     }
 
-    /* Aseguramos que el fondo sea negro pero NO forzamos opacity: 1 */
-    .ytp-chrome-bottom {
-        background-color: #000000 !important;
+    /* Hacemos que la barra de controles sea transparente para que el degradado de fondo haga el trabajo */
+    .ytp-chrome-bottom, 
+    .ytp-chrome-top {
+        background-color: transparent !important;
+    }
+
+    /* Excepción a la regla global (Sección 3) para que los botones blancos del reproductor 
+       no se pierdan si el video de fondo es muy claro */
+    .ytp-chrome-bottom *, 
+    .ytp-chrome-top * {
+        text-shadow: 0 0 3px rgba(0,0,0,0.8) !important;
     }
 
     /* 6. Desactivar Modo Ambiental (Cinematics) */
