@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           YouTube OLED Black
 @namespace      github.com/openstyles/stylus
-@version        1.5.0
+@version        1.6.0
 @description    Pitch Black OLED
 @author         Gemini
 ==/UserStyle== */
@@ -55,7 +55,7 @@
         border: 1px solid #333333 !important;
     }
 
-    /* 5. Reproductor y Barra de Progreso */
+    /* 5. FIX: Reproductor y Barra de Progreso */
     /* Restauramos los degradados transparentes para evitar el bloque negro sólido sobre el video */
     .ytp-gradient-bottom {
         background-color: transparent !important;
@@ -70,6 +70,12 @@
     /* Hacemos que la barra de controles sea transparente para que el degradado de fondo haga el trabajo */
     .ytp-chrome-bottom, 
     .ytp-chrome-top {
+        background-color: transparent !important;
+    }
+
+    /* ELIMINAR LOS CUADROS NEGROS DETRÁS DE LOS BOTONES: 
+       Forzamos a que el contenedor cuadrado del botón sea transparente */
+    .ytp-chrome-controls .ytp-button {
         background-color: transparent !important;
     }
 
