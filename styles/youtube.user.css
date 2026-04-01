@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           YouTube OLED Black
 @namespace      github.com/openstyles/stylus
-@version        1.6.2
+@version        1.6.3
 @description    Pitch Black OLED
 @author         Gemini
 ==/UserStyle== */
@@ -44,15 +44,26 @@
         backdrop-filter: none !important;
     }
 
-    /* 4. Barra de Categorías (Chips) - Sin faders */
+    /* 4. Barra de Categorías (Chips) - FIX BLOQUES CUADRADOS */
     #left-arrow.ytd-feed-filter-chip-bar-renderer::after,
     #right-arrow.ytd-feed-filter-chip-bar-renderer::before {
         display: none !important;
     }
 
+    /* Hacemos el contenedor rectangular totalmente transparente y sin bordes */
     yt-chip-cloud-chip-renderer {
+        background-color: transparent !important;
+        border: none !important;
+    }
+
+    /* Aplicamos el fondo OLED solo a la píldora redondeada */
+    .ytChipShapeChip {
         background-color: #000000 !important;
-        border: 1px solid #333333 !important;
+    }
+
+    /* Modificamos el contorno (stroke) nativo de YouTube para que sea un gris oscuro sutil */
+    .yt-spec-touch-feedback-shape__stroke {
+        border-color: #333333 !important;
     }
 
     /* 5. FIX: Reproductor y Barra de Progreso */
@@ -67,7 +78,7 @@
         background-image: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%) !important;
     }
 
-    /* Hacemos que la barra de controles principal sea transparente */
+    /* Hacemos que la barra de controles sea transparente para que el degradado de fondo haga el trabajo */
     .ytp-chrome-bottom, 
     .ytp-chrome-top {
         background-color: transparent !important;
@@ -84,13 +95,6 @@
     .ytp-chrome-bottom *, 
     .ytp-chrome-top * {
         text-shadow: 0 0 3px rgba(0,0,0,0.8) !important;
-    }
-
-    /* ELIMINAR EL BORDE GRIS DE LOS BOTONES: 
-       Atacamos directamente la propiedad que está dibujando el recuadro gris */
-    .ytp-button {
-        border: none !important;
-        outline: none !important;
     }
 
     /* 6. Desactivar Modo Ambiental (Cinematics) */
